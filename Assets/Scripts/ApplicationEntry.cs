@@ -33,8 +33,11 @@ namespace Shepherd
 
             IPaddock paddock = GameObject.Find("Paddock").GetComponent<IPaddock>();
 
-            IInputService inputService = new TouchInputService();//new MouseInputService();
-
+#if UNITY_EDITOR
+            IInputService inputService = new MouseInputService();
+#else
+            IInputService inputService = new TouchInputService();
+#endif
             IGameField gameField = new GameField(dogFactory, sheepFactory, paddock);
             IGameProccessManager gameProccessManager = new GameProccessManager(inputService, gameplayInterfaceManager, gameField);
             ILevelLoader levelLoader = new SimpleLevelLoader();
